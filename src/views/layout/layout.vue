@@ -13,12 +13,16 @@
 <script>
 import eHeader from '@/components/eHeader/eHeader'
 import eAside from '@/components/eAside/eAside'
+import * as cookie from 'utils/cookie'
 
 export default {
   name: 'layout',
   components: {
     eHeader,
     eAside
+  },
+  created () {
+    console.log(cookie.decode(cookie.get('TOKEN'))) // 解密
   }
 }
 </script>

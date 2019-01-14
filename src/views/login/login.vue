@@ -66,7 +66,7 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           if (this.loginForm.username === '123' && this.loginForm.password === '123') {
-            cookie.set('TOKEN', '11122233322211QQWWEE')
+            cookie.set('TOKEN', cookie.encrypt('11122233322211QQWWEE'))
             this.$router.push({path: '/'})
           } else {
             this.$message.error('账号或密码错误')
@@ -80,7 +80,7 @@ export default {
 
 <style lang='scss' scoped>
 .rel-container {
-  min-height: 100vh;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
   background: #f5f5f5;
