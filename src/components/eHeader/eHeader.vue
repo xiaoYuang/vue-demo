@@ -5,8 +5,7 @@
         王小虎<i class="el-icon-arrow-down el-icon--right"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item>查看</el-dropdown-item>
-        <el-dropdown-item>新增</el-dropdown-item>
+        <el-dropdown-item command="see">查看</el-dropdown-item>
         <el-dropdown-item divided command="logout">退出</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
@@ -15,7 +14,7 @@
 
 <script>
 import * as cookie from 'utils/cookie'
-
+import storage from '../../utils/storage'
 export default {
   name: 'e-header',
   methods: {
@@ -24,12 +23,17 @@ export default {
         case 'logout':
           this.logout()
           break
+        case 'see':
+          this.$router.push('/userInfo')
       }
     },
     logout () {
-      cookie.remove('TOKEN')
+      storage.l_removeItem('ACCESS_TOKEN')
       this.$router.push({path: '/login'})
     }
+  },
+  created () {
+    console.log(storage.l_getItem('ACCESS_TOKEN'))
   }
 }
 </script>
@@ -38,6 +42,7 @@ export default {
 .e-header {
   // text-align: right;
   font-size: 12px;
+  background-color: #fff;
   .m-dropdown {
     float: right;
   }

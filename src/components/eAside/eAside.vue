@@ -1,7 +1,10 @@
 <template>
-  <el-aside width="200px" class="e-aside">
+  <el-aside width="250px" class="e-aside">
     <el-menu :default-openeds="openeds"
              :default-active="activeIndex"
+              background-color="#5865B5"
+              text-color="#fff"
+              active-text-color="#ffd04b"
              @select="handleSelectMenu">
       <el-submenu :index="`${index + 1}`"
                   v-for="(item, index) in menuList"
@@ -31,12 +34,14 @@ export default {
   methods: {
     // 菜单激活函数
     handleSelectMenu (key, keyPath) {
+      console.log(key)
       this.activeIndex = key
       let opened = []
       opened.push(keyPath[0])
       this.openeds = opened
       switch (key) {
         case '1-1': this.$router.push({ path: '/' }); break
+        case '4-1': this.$router.push({ path: '/role' }); break // 角色管理
       }
     }
   },
@@ -48,7 +53,8 @@ export default {
 
 <style lang="scss" scoped>
 .e-aside {
-  background-color: rgb(238, 241, 246);
+  background:#5865B5;
+  padding-top: 60px;
   /deep/ .el-menu-item-group__title {
     display: none;
   }

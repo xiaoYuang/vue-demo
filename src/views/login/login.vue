@@ -5,7 +5,7 @@
                :rules="loginRules"
                ref="loginForm"
                class="rel-form">
-        <h3 class="title">用户登录</h3>
+        <h3 class="title color">用户登录</h3>
         <el-form-item prop="username">
           <el-input name="user"
                     type="text"
@@ -26,20 +26,25 @@
                      @click.native.prevent="handleLogin">登录</el-button>
         </el-form-item>
       </el-form>
+      <div class="btn color">
+        <span>注册</span>
+        <span>忘记密码?</span>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import * as cookie from 'utils/cookie'
-
+import Api from '../../assets/api/user'
+import storage from '../../utils/storage'
 export default {
   name: 'login',
   data () {
     return {
       loginForm: {
-        username: '',
-        password: ''
+        username: '18819285014',
+        password: 'XzsRCJ4euwBVRjsi+xWndw==s'
       },
       loginRules: {
         username: [{ required: true, trigger: 'change', message: '用户名不能为空!' }],
@@ -65,13 +70,25 @@ export default {
       // 登录验证
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          if (this.loginForm.username === '123' && this.loginForm.password === '123') {
-            cookie.set('TOKEN', cookie.encrypt('11122233322211QQWWEE'))
-            this.$router.push({path: '/'})
+          // if (this.loginForm.username === '123' && this.loginForm.password === '123') {
+          //   cookie.set('TOKEN', cookie.encrypt('11122233322211QQWWEE'))
+          const params = {
+            grant_type: 'password',
+            username: this.loginForm.username,
+            password: 'XzsRCJ4euwBVRjsi+xWndw==' // 密码暂时为这个
+          }
+          Api.getToken(params).then(res => {
+            if (res.code === 10200) {
+              storage.l_setItem('ACCESS_TOKEN', JSON.stringify(res.data))
+              this.$message({ message: '登录成功', type: 'success' })
+              this.$router.push({path: '/home'})
+            } else {
+              this.$message({ message: '登录失败', type: 'warning' })
+            }
+          })
           } else {
             this.$message.error('账号或密码错误')
           }
-        }
       })
     }
   }
@@ -83,10 +100,12 @@ export default {
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  background: #f5f5f5;
+  background-image:url('../../assets/images/login_bg.png');
+  background-repeat: no-repeat;
+  background-size: 100%;
   .rel-box-body {
     width: 400px;
-    margin: 30px auto 0;
+    margin: 200px auto 0;
     background: #fff;
     padding-bottom: 40px;
     .rel-form {
@@ -158,6 +177,13 @@ export default {
         }
       }
     }
+  }
+  .btn {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 30px;
+    font-size: 12px;
+    cursor: pointer;
   }
 }
 </style>

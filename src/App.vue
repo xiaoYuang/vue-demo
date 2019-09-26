@@ -7,13 +7,16 @@
 <style>
 #app {
   height: 100%;
+  background-color: #f1f1f1;
 }
 .el-header {
-  background-color: #B3C0D1;
   color: #333;
   line-height: 60px;
 }
 .el-aside {
   color: #333;
+}
+.el-submenu__title i {
+  color: #fff;
 }
 </style>
