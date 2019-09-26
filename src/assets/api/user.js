@@ -15,5 +15,9 @@ export default {
   // 获取角色
   sysRole (data) {
     return get('/bida-user/sysRole/page', data)
-  }
+  },
+  // 新增或者编辑角色
+  addOrEditRole (data) {
+    return post('/bida-user/sysRole/addOrEdit', data)
+  },
 }

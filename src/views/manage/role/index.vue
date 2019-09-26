@@ -2,7 +2,7 @@
   <div class="role">
     <div class="header-title">
       <span>角色管理</span>
-      <el-button size="mini" type="primary">添加角色</el-button>
+      <el-button size="mini" type="primary" @click="addOrEditRole('add')">添加角色</el-button>
     </div>
     <div class="search-bar">
       <el-input v-model="roleName" placeholder="请输入名称"></el-input>
@@ -28,11 +28,13 @@
     </div>
     <pagination style="margin-top:20px;text-align:center"
      :total="total" :pageSize="pageSize" :pageNumber="pageNumber" @handleCurrentChange="handleCurrentChange" @handleSizeChange="handleSizeChange" :type="0"/>
+     <dialogs :showDialog="showDialog" @close="close"/>
   </div>
 </template>
 <script>
 import pagination from '../../../components/pagination'
 import Api from '../../../assets/api/user'
+import dialogs from './child/dialog'
 export default {
   name: 'role',
   data () {
@@ -42,6 +44,7 @@ export default {
       total: 100,
       roleName: '',
       roleTag: '',
+      showDialog: false,
       tableData: [
         {
           date: '2016-05-02',
@@ -66,11 +69,30 @@ export default {
   methods: {
     getRoleList () {
       const params = {
-        companyId: JSON.parse(localStorage.getItem('ACCESS_TOKEN')).companyId
+        companyId: this.getCompanyId()
       }
       Api.sysRole(params).then(res => {
         console.log(res)
       })
+    },
+    close () {
+      console.log(1111)
+      // this.showDialog = false
+    },
+    addOrEditRole (type) {
+      this.showDialog =  true
+      // const params = {
+      //   companyId: this.getCompanyId(),
+      //   roleCode: ,
+      //   roleId: ,
+      //   roleName: ,
+      //   roleRemarks: ,
+      //   roleTag: ,
+      //   roleType: ,
+      //   sort: 0,
+      //   status: ,
+      //   systemType: 
+      // }
     },
     handleCurrentChange (val) {
       this.pageNumber = val
@@ -80,7 +102,8 @@ export default {
     }
   },
   components: {
-    pagination
+    pagination,
+    dialogs
   },
   created () {
     this.getRoleList()

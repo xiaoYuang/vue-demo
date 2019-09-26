@@ -8,12 +8,13 @@ import storage from './utils/storage'
 import ElementUI from 'element-ui'
 import './assets/css/common.scss'
 import axios from 'axios'
+import util from './utils/tool'
 import './utils/dateFormat'
 import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/element-variables.scss'
 
 Vue.use(ElementUI)
-
+Vue.use(util)
 Vue.config.productionTip = false
 
 
